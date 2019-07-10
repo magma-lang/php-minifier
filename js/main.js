@@ -1,0 +1,3 @@
+function custom() {
+	return () => 'custom';
+}
