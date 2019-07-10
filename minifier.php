@@ -2,7 +2,7 @@
 /*
 @package: Magma PHP Minifier for JS and CSS
 @author: Sören Meier <info@s-me.ch>
-@version: 0.1 <2019-07-05>
+@version: 0.1 <2019-07-10>
 @docs: minifier.magma-lang.com/php/docs/
 */
 
@@ -10,22 +10,11 @@ namespace MagmaMinifier;
 
 class Minifier {
 
-	public $debug = false;
+	protected $debug = false;
 
 	protected $tmpPath = '';
 
-	public function __construct( string $tmpPath, bool $debug = false ) {
-
-		$this->tmpPath = $tmpPath;
-		$this->debug = $debug;
-		if ( !is_dir( $this->tmpPath ) )
-			mkdir( $this->tmpPath );
-
-	}
-
-	// $v to change the filename for new versions
-	// returns the relative path
-	// to the tmp folder
+	// METHODS
 	public function js( array $paths, string $v = '' ) {
 
 		$k = md5( implode( $paths ). $v );
@@ -82,6 +71,25 @@ class Minifier {
 
 	}
 
+	public function cleanTmp() {
+		self::deleteDir( $this->tmpPath );
+	}
+
+	// INIT
+	public function __construct( string $tmpPath, bool $debug = false ) {
+
+		$this->tmpPath = $tmpPath;
+		$this->debug = $debug;
+		if ( !is_dir( $this->tmpPath ) )
+			mkdir( $this->tmpPath );
+
+	}
+
+	// PROTECTED
+
+	// $v to change the filename for new versions
+	// returns the relative path
+	// to the tmp folder
 	protected static function deleteDir( string $dir ) {
 
 		foreach ( glob( $dir. '*', GLOB_MARK ) as $path )
@@ -92,10 +100,6 @@ class Minifier {
 
 		rmdir( $dir );
 
-	}
-
-	public function cleanTmps() {
-		self::deleteDir( $this->tmpPath );
 	}
 
 }
