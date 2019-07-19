@@ -1,0 +1,1 @@
+`haha ${ list.map( l => `a ${ l } a` ).join('') } hah crazy`;

@@ -2,7 +2,7 @@
 /*
 @package: Magma PHP Minifier for JS and CSS
 @author: Sören Meier <info@s-me.ch>
-@version: 0.1 <2019-07-05>
+@version: 0.1.1 <2019-07-10>
 @docs: minifier.magma-lang.com/php/docs/
 */
 
@@ -65,7 +65,7 @@ class JsMinifier {
 			$right[] = $ks. '\s';
 		}
 
-		$keepingSpace = explode( ',', 'let,const,var,await,async,class,typeof,function,export,import,case,throw,import,void,delete,return,yield,static,implements,package,private,public,protected,break,continue,else' );
+		$keepingSpace = explode( ',', 'let,const,var,await,async,class,typeof,function,export,import,case,throw,import,void,delete,return,yield,static,get,set,implements,package,private,public,protected,break,continue,else' );
 		foreach ( $keepingSpace as $ks )
 			$left[] = '[\s;\({]'. $ks;
 
@@ -220,6 +220,7 @@ class JsMinifier {
 							$parts[] = [true, $buff. $c];
 							$buff = '';
 							$nBlockStart = false;
+							$nBlockCount = 1;
 							$inNBlock = true;
 
 							continue;
