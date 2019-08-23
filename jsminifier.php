@@ -2,7 +2,7 @@
 /*
 @package: Magma PHP Minifier for JS and CSS
 @author: Sören Meier <info@s-me.ch>
-@version: 0.1.1 <2019-07-10>
+@version: 0.1.2 <2019-08-23>
 @docs: minifier.magma-lang.com/php/docs/
 */
 
@@ -22,7 +22,7 @@ class JsMinifier {
 
 		// 1e5 + +x
 		// fix for
-		$str = preg_replace( '/(?<=[+\-\/%*])\s*([+-][a-zA-Z0-9.]+)/', '($0)', $str );
+		$str = preg_replace( '/(?<=[+\-\/%*])\s+([+-][a-zA-Z0-9.]+)/', '($0)', $str );
 
 		$parts = $this->parseJs( $str );
 
@@ -56,10 +56,11 @@ class JsMinifier {
 
 	protected function prepareRegex() {
 
-		$left = [];
-		$right = [];
+		$left = [ '[\s;\({]new' ];
+		$right = [ 'new\s' ];
 
-		$keepingSpaces = explode( ',', 'in,of,new,instanceof,extends' );
+		// need to fix (new >
+		$keepingSpaces = explode( ',', 'in,of,instanceof,extends' );
 		foreach ( $keepingSpaces as $ks ) {
 			$left[] = '\s'. $ks;
 			$right[] = $ks. '\s';
