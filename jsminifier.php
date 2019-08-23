@@ -56,10 +56,10 @@ class JsMinifier {
 
 	protected function prepareRegex() {
 
+		// fix (new >
 		$left = [ '[\s;\({]new' ];
 		$right = [ 'new\s' ];
 
-		// need to fix (new >
 		$keepingSpaces = explode( ',', 'in,of,instanceof,extends' );
 		foreach ( $keepingSpaces as $ks ) {
 			$left[] = '\s'. $ks;
